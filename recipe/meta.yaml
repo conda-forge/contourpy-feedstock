@@ -10,7 +10,7 @@ source:
   sha256: 896631cd40222aef3697e4e51177d14c3709fda49d30983269d584f034acc8a4
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<37]
   script: {{ PYTHON }} -m pip install . -vv
 
@@ -21,7 +21,7 @@ requirements:
     - pybind11 >=2.6                      # [build_platform != target_platform]
     - python                              # [build_platform != target_platform]
   host:
-    - build
+    - python-build
     - pip
     - pybind11 >=2.6
     - python
