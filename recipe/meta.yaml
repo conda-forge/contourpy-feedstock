@@ -21,10 +21,10 @@ requirements:
     - pybind11 >=2.6                      # [build_platform != target_platform]
     - python                              # [build_platform != target_platform]
   host:
-    - python-build
     - pip
     - pybind11 >=2.6
     - python
+    - python-build
     - setuptools >=42
   run:
     - numpy >=1.16
