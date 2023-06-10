@@ -14,9 +14,7 @@ source:
 build:
   number: 0
   skip: true  # [py<38]
-  script: |
-    {{ PYTHON }} -m pip install . -vv --no-build-isolation  # [not arm64]
-    {{ PYTHON }} -m pip install . -vv --no-build-isolation --config-settings=setup-args=--cross-file="$PWD/meson-cross.ini"  # [arm64]
+  script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --config-settings=setup-args=--cross-file="$PWD/meson-cross.ini"
 
 requirements:
   build:
