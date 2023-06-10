@@ -20,6 +20,9 @@ requirements:
   build:
     - {{ compiler('cxx') }}
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
+    - meson >=1.1.0                       # [build_platform != target_platform]
+    - meson-python >=0.13.1               # [build_platform != target_platform]
+    - ninja                               # [build_platform != target_platform]
     - pybind11 >=2.10.4                   # [build_platform != target_platform]
     - python                              # [build_platform != target_platform]
   host:
