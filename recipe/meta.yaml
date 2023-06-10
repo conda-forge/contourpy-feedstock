@@ -14,15 +14,14 @@ source:
 build:
   number: 0
   skip: true  # [py<38]
-  script: {{ PYTHON }} -m pip install . -vv --no-build-isolation --config-settings=setup-args=--cross-file="$PWD/meson-cross.ini"
 
 requirements:
   build:
     - {{ compiler('cxx') }}
     - cross-python_{{ target_platform }}  # [build_platform != target_platform]
-    - meson >=1.1.0                       # [build_platform != target_platform]
-    - meson-python >=0.13.1               # [build_platform != target_platform]
-    - ninja                               # [build_platform != target_platform]
+    #- meson >=1.1.0                       # [build_platform != target_platform]
+    #- meson-python >=0.13.1               # [build_platform != target_platform]
+    #- ninja                               # [build_platform != target_platform]
     - pybind11 >=2.10.4                   # [build_platform != target_platform]
     - python                              # [build_platform != target_platform]
   host:
@@ -42,7 +41,8 @@ test:
     - contourpy.util
   commands:
     - pip check
-    - python -c "import contourpy as c; c.contour_generator(z=[[0, 1], [2, 3]]).lines(0.9)"
+    - python -c "import contourpy as c; print(c.contour_generator(z=[[0, 1], [2, 3]]).lines(0.9))"
+    - python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
   requires:
     - pip
 
