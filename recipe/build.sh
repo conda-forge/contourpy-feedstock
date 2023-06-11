@@ -1,6 +1,9 @@
 #!/bin/bash
 set -ex
 
+echo $MESON_ARGS
+ls -l $BUILD_PREFIX/meson_cross_file.txt
+
 if [[ "${target_platform}" == "osx-arm64" ]]
 then
     # Cross-compilation using similar approach to scikit-image.
