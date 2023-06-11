@@ -3,23 +3,24 @@ set -ex
 
 if [[ "${target_platform}" == "osx-arm64" ]]
 then
-    export ARCHFLAGS="-arch arm64"
+    # Cross-compilation using similar approach to scikit-image.
+    # Also see https://conda-forge.org/blog/posts/2020-10-29-macos-arm64/ about MESON_ARGS.
+    mkdir builddir
 
-    # From scipy-feedstock:
-    # meson-python already sets up a -Dbuildtype=release argument to meson, so
-    # we need to strip --buildtype out of MESON_ARGS or fail due to redundancy
-    MESON_ARGS_REDUCED="$(echo $MESON_ARGS | sed 's/--buildtype release //g')"
+    echo ${MESON_ARGS}
 
      # Temporary fix for finding pybind11 for cross-compiling until meson 1.2.0 is released.
-    MESON_ARGS_REDUCED="$MESON_ARGS_REDUCED --cross-file=$PWD/meson-cross.ini"
+    MESON_ARGS="$MESON_ARGS --cross-file=$PWD/meson-cross.ini"
 
-    #env
-    #which python
-    #$PYTHON --version
+    echo ${MESON_ARGS}
 
-    # -wnx flags mean: --wheel --no-isolation --skip-dependency-check
-    $PYTHON -m build -w -n -x -Csetup-args=${MESON_ARGS_REDUCED// / -Csetup-args=}
-    $PYTHON -m pip install dist/contourpy*.whl
+    ${PYTHON} $(which meson) setup ${MESON_ARGS} builddir
+
+    ${PYTHON} -m build --wheel --no-isolation --skip-dependency-check -Cbuilddir=builddir
+    ${PYTHON} -m pip install dist/contourpy*.whl
+
+    # This may not be required...
+    #export ARCHFLAGS="-arch arm64"
 else
     $PYTHON -m pip install . -vv --no-build-isolation
 fi

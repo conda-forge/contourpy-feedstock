@@ -13,7 +13,8 @@ source:
 
 build:
   number: 0
-  skip: true  # [py<38]
+  #skip: true  # [py<38]    XXX temporarily XXX
+  skip: true  # [py<311]
 
 requirements:
   build:
@@ -31,6 +32,7 @@ requirements:
     - ninja
     - pybind11 >=2.10.4
     - python
+    - python-build  # [arm64]
   run:
     - numpy >=1.16
     - python
