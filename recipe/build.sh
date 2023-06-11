@@ -9,17 +9,22 @@ then
     # about MESON_ARGS and cross file.
     cat $BUILD_PREFIX/meson_cross_file.txt
 
-    if [[ "${target_platform}" == "osx-arm64" ]]
+    if [[ "${target_platform}" != "osx-arm64" ]]
     then
-        # Second cross-file is a temporary fix for finding pybind11 when cross-compiling
-        # until meson 1.2.0 is released.
-        $PYTHON -m pip install . -vv --no-build-isolation \
-            --config-settings=setup-args=--cross-file=$BUILD_PREFIX/meson_cross_file.txt \
-            --config-settings=setup-args=--cross-file=$PWD/meson-cross.ini
-    else
-        $PYTHON -m pip install . -vv --no-build-isolation \
-            --config-settings=setup-args=--cross-file=$BUILD_PREFIX/meson_cross_file.txt
+        # Based on scipy-feedstock:
+        # HACK: extend $CONDA_PREFIX/meson_cross_file that's created in
+        # https://github.com/conda-forge/ctng-compiler-activation-feedstock/blob/main/recipe/activate-gcc.sh
+        # https://github.com/conda-forge/clang-compiler-activation-feedstock/blob/main/recipe/activate-clang.sh
+        # to use host python; requires that [binaries] section is last in meson_cross_file
+        echo "python = '${PREFIX}/bin/python'" >> $BUILD_PREFIX/meson_cross_file.txt
+        cat $BUILD_PREFIX/meson_cross_file.txt
     fi
+
+    # Second cross-file is a temporary fix for finding pybind11 when cross-compiling
+    # until meson 1.2.0 is released.
+    $PYTHON -m pip install . -vv --no-build-isolation \
+        --config-settings=setup-args=--cross-file=$BUILD_PREFIX/meson_cross_file.txt \
+        --config-settings=setup-args=--cross-file=$PWD/meson-cross.ini
 else
     $PYTHON -m pip install . -vv --no-build-isolation
 fi
