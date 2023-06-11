@@ -32,7 +32,7 @@ requirements:
     - ninja
     - pybind11 >=2.10.4
     - python
-    - python-build  # [arm64]
+    #- python-build  # [arm64]
   run:
     - numpy >=1.16
     - python
