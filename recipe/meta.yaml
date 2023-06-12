@@ -9,7 +9,7 @@ source:
   #url: https://pypi.io/packages/source/{{ name[0] }}/{{ name }}/contourpy-{{ version }}.tar.gz
   #sha256: d8165a088d31798b59e91117d1f5fc3df8168d8b48c4acc10fc0df0d0bdbcc5e
   git_url: https://github.com/contourpy/contourpy.git
-  git_rev: 9821ecb3000046d39f9a1c894165f9aeb04bda9d
+  git_rev: 16286e1415a962136b0b684207b5b6ba469750d1
 
 build:
   number: 0
