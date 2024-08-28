@@ -41,11 +41,16 @@ test:
     - contourpy.util
   commands:
     - pip check
-    - python -c "import contourpy as c; print(c.contour_generator(z=[[0, 1], [2, 3]]).lines(0.9))"
     - python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
     - python -c "import platform, sys; print(sys.version, platform.uname())"
+    - python -m pytest -v
   requires:
     - pip
+    - pytest
+  source_files:
+    - tests/__init__.py
+    - tests/test_minimal.py
+    - tests/util_test.py
 
 about:
   description: |
