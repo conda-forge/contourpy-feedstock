@@ -21,7 +21,7 @@ requirements:
     - meson >=1.2.0                       # [build_platform != target_platform]
     - meson-python >=0.13.1               # [build_platform != target_platform]
     - ninja                               # [build_platform != target_platform]
-    - pybind11 >=2.12.0                   # [build_platform != target_platform]
+    - pybind11 >=2.13.1                   # [build_platform != target_platform]
     - python                              # [build_platform != target_platform]
   host:
     - pip
@@ -29,10 +29,10 @@ requirements:
     - meson-python >=0.13.1
     - ninja
     - pkg-config
-    - pybind11 >=2.12.0
+    - pybind11 >=2.13.1
     - python
   run:
-    - numpy >=1.20
+    - numpy >=1.23
     - python
 
 test:
