@@ -10,7 +10,7 @@ source:
   sha256: 083e12155b210502d0bca491432bb04d56dc3432f95a979b429f2848c3dbe880
 
 build:
-  number: 0
+  number: 1
   skip: true  # [py<311]
 
 requirements:
@@ -32,7 +32,7 @@ requirements:
     - pybind11 >=2.13.2,!=2.13.3
     - python
   run:
-    - numpy >=1.23
+    - numpy >=1.25
     - python
 
 test:
