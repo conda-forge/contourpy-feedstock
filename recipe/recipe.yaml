@@ -3,7 +3,7 @@ schema_version: 1
 context:
   version: "1.4.0"
 
-recipe:
+package:
   name: contourpy
   version: ${{ version }}
 
@@ -14,48 +14,48 @@ source:
 build:
   number: 0
 
-outputs:
-  - package:
-      name: contourpy
-    requirements:
-      build:
-        - ${{ compiler('cxx') }}
-        - ${{ stdlib("c") }}
-        - if: build_platform != target_platform
-          then:
-            - cross-python_${{ target_platform }}
-            - meson-python >=0.18.0
-            - ninja
-            - pybind11 >=2.13.2,!=2.13.3
-            - python
-      host:
-        - pip
+requirements:
+  build:
+    - ${{ compiler('cxx') }}
+    - ${{ stdlib("c") }}
+    - if: build_platform != target_platform
+      then:
+        - cross-python_${{ target_platform }}
+        - meson >=1.2.0
         - meson-python >=0.18.0
         - ninja
-        - pkg-config
         - pybind11 >=2.13.2,!=2.13.3
         - python
+  host:
+    - pip
+    - meson >=1.2.0
+    - meson-python >=0.18.0
+    - ninja
+    - pkg-config
+    - pybind11 >=2.13.2,!=2.13.3
+    - python
+  run:
+    - numpy >=2.0
+    - python
+
+tests:
+  - python:
+      imports:
+        - contourpy
+        - contourpy.util
+      pip_check: true
+  - script:
+      - python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
+      - python -c "import platform, sys; print(sys.version, platform.uname())"
+      - pytest -v
+    requirements:
       run:
-        - numpy >=2.0
-        - python
-    tests:
-      - python:
-          imports:
-            - contourpy
-            - contourpy.util
-          pip_check: true
-      - script:
-          - python -c "from contourpy.util import build_config; from pprint import pprint; pprint(build_config())"
-          - python -c "import platform, sys; print(sys.version, platform.uname())"
-          - pytest -v
-        requirements:
-          run:
-            - pytest
-        files:
-          source:
-            - tests/__init__.py
-            - tests/test_minimal.py
-            - tests/util_test.py
+        - pytest
+    files:
+      source:
+        - tests/__init__.py
+        - tests/test_minimal.py
+        - tests/util_test.py
 
 about:
   description: |
