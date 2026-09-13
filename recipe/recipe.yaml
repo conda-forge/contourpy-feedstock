@@ -13,6 +13,7 @@ source:
 
 build:
   number: 0
+  skip: match(python, "<3.12")
 
 requirements:
   build:
@@ -21,14 +22,12 @@ requirements:
     - if: build_platform != target_platform
       then:
         - cross-python_${{ target_platform }}
-        - meson >=1.2.0
         - meson-python >=0.18.0
         - ninja
         - pybind11 >=2.13.2,!=2.13.3
         - python
   host:
     - pip
-    - meson >=1.2.0
     - meson-python >=0.18.0
     - ninja
     - pkg-config
